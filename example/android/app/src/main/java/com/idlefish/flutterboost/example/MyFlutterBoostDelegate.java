@@ -13,9 +13,9 @@ import io.flutter.embedding.android.FlutterActivityLaunchConfigs;
 public class MyFlutterBoostDelegate implements FlutterBoostDelegate {
 
     @Override
-    public void pushNativeRoute(String pageName, Map<String, Object> arguments) {
+    public void pushNativeRoute(String pageName, Map<String, Object> arguments,int requestCode) {
         Intent intent = new Intent(FlutterBoost.instance().currentActivity(), NativePageActivity.class);
-        FlutterBoost.instance().currentActivity().startActivity(intent);
+        FlutterBoost.instance().currentActivity().startActivityForResult(intent,requestCode);
     }
 
     @Override

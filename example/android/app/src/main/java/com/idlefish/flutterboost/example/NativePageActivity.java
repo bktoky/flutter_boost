@@ -1,5 +1,6 @@
 package com.idlefish.flutterboost.example;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import io.flutter.embedding.android.FlutterActivityLaunchConfigs;
 
 public class NativePageActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private TextView mReturnData;
     private TextView mOpenNative;
     private TextView mOpenFlutter;
     private TextView mOpenFlutterFragment;
@@ -32,10 +34,11 @@ public class NativePageActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.native_page);
-
+        mReturnData = findViewById(R.id.return_data);
         mOpenNative = findViewById(R.id.open_native);
         mOpenFlutter = findViewById(R.id.open_flutter);
 
+        mReturnData.setOnClickListener(this);
         mOpenNative.setOnClickListener(this);
         mOpenFlutter.setOnClickListener(this);
     }
@@ -47,7 +50,12 @@ public class NativePageActivity extends AppCompatActivity implements View.OnClic
         params.put("bool", true);
         params.put("int", 666);
 
-        if (v == mOpenNative) {
+        if (v == mReturnData) {
+           Intent intent = new Intent();
+           intent.putExtra("message","return data from native");
+           setResult(Activity.RESULT_OK,intent);
+           finish();
+        } else if (v == mOpenNative) {
             NativeRouter.openPageByUrl(this, NativeRouter.NATIVE_PAGE_URL,params);
         } else if (v == mOpenFlutter) {
             Intent intent = new FlutterBoostActivity.CachedEngineIntentBuilder(FlutterBoostActivity.class, FlutterBoost.ENGINE_ID)
